@@ -74,8 +74,7 @@
 			delete_yn = 'N'
 		ORDER BY
 			notice_yn ASC,
-			idx DESC,
-			insert_time DESC
+			idx DESC
 	</select>
 	
 	<select id="selectBoardTotalCount" parameterType="com.bluering.domain.BoardDTO" resultType="int">

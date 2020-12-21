@@ -1,4 +1,6 @@
-package com.bluering.configuration;
+package com.bluering.controller;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -50,5 +52,13 @@ public class BoardController {
 		}
 
 		return "redirect:/board/list.do";
+	}
+	
+	@GetMapping(value = "/board/list.do")
+	public String openBoardList(Model model) {
+		List<BoardDTO> boardList = boardService.getBoardList();
+		model.addAttribute("boardList", boardList);
+
+		return "board/list";
 	}
 }
