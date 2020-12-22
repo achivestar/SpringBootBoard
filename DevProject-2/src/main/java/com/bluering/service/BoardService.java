@@ -3,6 +3,7 @@ package com.bluering.service;
 import java.util.List;
 
 import com.bluering.domain.BoardDTO;
+import com.bluering.paging.Criteria;
 
 public interface BoardService {
 
@@ -12,5 +13,5 @@ public interface BoardService {
 	
 	public boolean deleteBoard(Long idx);
 	
-	public List<BoardDTO> getBoardList();
+	public List<BoardDTO> getBoardList(BoardDTO params);
 }

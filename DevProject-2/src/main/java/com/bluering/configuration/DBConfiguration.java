@@ -11,16 +11,22 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
+@EnableTransactionManagement  //스프링에서 제공하는 애너테이션 기반 트랜젝션을 활성화 
 public class DBConfiguration {
 
 	@Autowired
 	private ApplicationContext applicationContext;
+	
+	
 	
 	@Bean
 	@ConfigurationProperties(prefix="spring.datasource.hikari")
@@ -52,5 +58,10 @@ public class DBConfiguration {
 	@Bean
 	public SqlSessionTemplate sqlSession() throws Exception {  //SqlSessionTempate은 SqlSessionFactory를 통해 생성되고 커밋,롤백 등 SQL의 실행에 필요한 모든 메서드를 갖는 객체
 		return new SqlSessionTemplate(sqlSessionFactory());
+	}
+	
+	@Bean
+	public PlatformTransactionManager transactionManager() {  // 스프링에서 제공해주는 트랜젝션 매니저를 Bean으로 등록
+		return new DataSourceTransactionManager(dataSource());
 	}
 }

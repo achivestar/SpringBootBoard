@@ -72,10 +72,12 @@
 			tb_board
 		WHERE
 			deleteYn = 'N'
+			<include refid="com.bluering.mapper.CommonMapper.search" />
 		ORDER BY
 			noticeYn ASC,
 			idx DESC,
 			insertTime DESC
+			<include refid="com.bluering.mapper.CommonMapper.paging" />
 	</select>
 	
 	<select id="selectBoardTotalCount" parameterType="com.bluering.domain.BoardDTO" resultType="int">
@@ -85,5 +87,6 @@
 			tb_board
 		WHERE
 			deleteYn = 'N'
+			<include refid="com.bluering.mapper.CommonMapper.search" />	
 	</select>
 </mapper>

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.bluering.domain.BoardDTO;
 import com.bluering.mapper.BoardMapper;
+import com.bluering.paging.Criteria;
+import com.bluering.paging.PaginationInfo;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -23,7 +25,7 @@ public class BoardServiceImpl implements BoardService{
 		}else {
 			queryResult = boardMapper.updateBoard(params);
 		}
-		
+
 		return (queryResult == 1) ? true : false;
 	}
 
@@ -43,13 +45,18 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardDTO> getBoardList() {
+	public List<BoardDTO> getBoardList(BoardDTO params) {
 		List<BoardDTO> boardList = Collections.emptyList(); //NPE 방지를 위해 비어있는 리스트 선언
 		
-		int boardTotalCount = boardMapper.selectBoardTotalCount();
+		int boardTotalCount = boardMapper.selectBoardTotalCount(params);
+		
+		PaginationInfo paginationInfo = new PaginationInfo(params);
+		paginationInfo.setTotalRecordCount(boardTotalCount);
+		
+		params.setPaginationInfo(paginationInfo);
 		
 		if(boardTotalCount > 0) {
-			boardList = boardMapper.selectBoardList();
+			boardList = boardMapper.selectBoardList(params);
 		}
 		
 		return boardList;
