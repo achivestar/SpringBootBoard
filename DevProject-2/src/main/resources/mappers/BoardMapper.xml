@@ -7,12 +7,12 @@
 		,content
 		,writer
 		,view_cnt
-		,notice_yn
-		,secret_yn
-		,delete_yn
-		,insert_time
-		,update_time
-		,delete_time
+		,noticeYn
+		,secretYn
+		,deleteYn
+		,insertTime
+		,updateTime
+		,deleteTime
 	</sql>
 	<insert id="insertBoard" parameterType="com.bluering.domain.BoardDTO">
 		INSERT INTO tb_board(
@@ -38,7 +38,7 @@
 		FROM
 			tb_board
 		WHERE
-			delete_yn = 'N'
+			deleteYn = 'N'
 		AND
 			idx = #{idx}
 	</select>
@@ -46,12 +46,12 @@
 	<update id="updateBoard" parameterType="com.bluering.domain.BoardDTO">
 		UPDATE tb_board
 		SET
-			update_time = NOW()
+			updateTime = NOW()
 		  , title = #{title}
 		  , content = #{content}
 		  , writer = #{writer}
-		  , notice_yn = IFNULL(#{noticeYn}, 'N')
-		  , secret_yn = IFNULL(#{secretYn}, 'N')
+		  , noticeYn = IFNULL(#{noticeYn}, 'N')
+		  , secretYn = IFNULL(#{secretYn}, 'N')
 		WHERE
 		  idx = #{idx}
 	</update>
@@ -59,8 +59,8 @@
 	<update id="deleteBoard" parameterType="long">
 		UPDATE tb_board
 		SET
-			delete_yn = 'Y'
-		  ,delete_time = NOW()
+			deleteYn = 'Y'
+		  ,deleteTime = NOW()
 		WHERE
 		   idx = #{idx}
 	</update>
@@ -71,10 +71,11 @@
 		FROM 
 			tb_board
 		WHERE
-			delete_yn = 'N'
+			deleteYn = 'N'
 		ORDER BY
-			notice_yn ASC,
-			idx DESC
+			noticeYn ASC,
+			idx DESC,
+			insertTime DESC
 	</select>
 	
 	<select id="selectBoardTotalCount" parameterType="com.bluering.domain.BoardDTO" resultType="int">
@@ -83,6 +84,6 @@
 		FROM
 			tb_board
 		WHERE
-			delete_yn = 'N'
+			deleteYn = 'N'
 	</select>
 </mapper>

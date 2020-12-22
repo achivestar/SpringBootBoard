@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko"  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="board/layout/basic">
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorator="board/layout/basic">
 	<th:block layout:fragment="title">
 		<title>This page is a list page</title>
 	</th:block>
@@ -26,14 +26,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:if="${not #lists.isEmpty( boardList )}" th:each="list : ${boardList}">
-						<td scope="row" th:text="${#strings.equals( list.noticeYn, 'Y' ) ? '공지' :list.idx}"></td>
+					<tr th:if="${not #lists.isEmpty( boardList )}" th:each="board : ${boardList}">
+						<td scope="row" th:text="${#strings.equals( board.noticeYn,'Y' ) ? '공지' :board.idx}"></td>
 						<td class="text-left">
-							<a th:href="@{/board/view.do( idx=${list.idx} )}" th:text="${list.title}"></a>
+							<a th:href="@{/board/view.do( idx=${board.idx} )}" th:text="${board.title}"></a>
 						</td>
-						<td th:text="${list.writer}"></td>
-						<td th:text="${#temporals.format(list.insertTime,'yyyy-MM-dd')}"></td>
-						<td th:text="${list.viewCnt}"></td>
+						<td th:text="${board.writer}"></td>
+						<td th:text="${#temporals.format(board.insertTime,'yyyy-MM-dd HH:mm')}"></td>
+						<td th:text="${board.viewCnt}"></td>
 					</tr>
 					<tr th:unless="${not #lists.isEmpty( boardList )}">
 						<td colspan="5">조회된 결과가 없습니다.</td>
